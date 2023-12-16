@@ -1,17 +1,27 @@
 package br.edu.infnet.BookstoreApp.model.domain;
 
+import javax.persistence.*;
 import java.util.List;
 
+@Entity
 public class Usuario {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
     private String nome;
     private String email;
     private String senha;
     private TipoUsuario tipo;
-    private CarrinhoDeCompras carrinho;
-    private List<Pedido> pedidos;
-    
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "carrinho_id", referencedColumnName = "id")
+	private CarrinhoDeCompras carrinho;
 
-    private List<Avaliacao> avaliacoes;
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Pedido> pedidos;
+
+	@OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+	private List<Avaliacao> avaliacoes;
 
 
     public Usuario() {
@@ -28,7 +38,7 @@ public class Usuario {
 
     @Override
     public String toString() {
-        return String.format("Usuário: Email=%s, Nome=%s, Tipo=%s", email, nome, tipo);
+        return String.format("Usuário: ID=%s Email=%s, Nome=%s, Tipo=%s",id, email, nome, tipo);
     }
 
 	public String getNome() {
@@ -69,6 +79,14 @@ public class Usuario {
 
 	public void setCarrinho(CarrinhoDeCompras carrinho) {
 		this.carrinho = carrinho;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public List<Pedido> getPedidos() {

@@ -47,15 +47,15 @@ public class PedidoLoader implements ApplicationRunner {
 
             try {
                 pedido.setDataPedido(LocalDateTime.parse(campos[1], formatter));
-                
+
                 String statusString = campos[2].toUpperCase();
                 StatusPedido statusPedido = StatusPedido.valueOf(statusString);
                 pedido.setStatus(statusPedido);
 
-                Usuario cliente = usuarioService.obterPorEmail(campos[3]); 
+                Usuario cliente = usuarioService.obterPorEmail(campos[3]);
                 pedido.setCliente(cliente);
 
-                List<ItemDeCarrinho> itensCarrinho = obterItensCarrinho(campos[0]); 
+                List<ItemDeCarrinho> itensCarrinho = obterItensCarrinho(campos[0]);
                 pedido.setItensCarrinho(itensCarrinho);
 
                 pedidoService.incluir(pedido);
@@ -77,10 +77,9 @@ public class PedidoLoader implements ApplicationRunner {
         leitura.close();
     }
 
- 
+
     private List<ItemDeCarrinho> obterItensCarrinho(String identificador) {
-     
+
         return new ArrayList<>();
     }
 }
-

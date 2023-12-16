@@ -38,22 +38,21 @@ public class AvaliacaoLivroLoader implements ApplicationRunner {
         while (linha != null) {
             String[] campos = linha.split(";");
 
-            Avaliacao avaliacao = new Avaliacao();
+            Avaliacao aval = new Avaliacao();
 
             try {
-                avaliacao.setAvaliacao(Integer.parseInt(campos[0]));
-                avaliacao.setComentario(campos[1]);
+                aval.setAvaliacao(Integer.parseInt(campos[0]));
+                aval.setComentario(campos[2]); // Corrigido para o terceiro campo
 
-                String tituloLivro = campos[3]; 
-               
+                String tituloLivro = campos[3];
 
-                avaliacao.associarLivroPorTitulo(tituloLivro, livroService);
+                aval.associarLivroPorTitulo(tituloLivro, livroService);
 
                 String emailCliente = campos[4];
                 Usuario cliente = usuarioService.obterPorEmail(emailCliente);
-                avaliacao.setCliente(cliente);
+                aval.setCliente(cliente);
 
-                avaliacaoService.incluir(avaliacao);
+                avaliacaoService.incluir(aval);
             } catch (NumberFormatException e) {
                 System.err.println("Erro ao converter Avaliação para inteiro: " + e.getMessage());
                 e.printStackTrace();
@@ -65,8 +64,8 @@ public class AvaliacaoLivroLoader implements ApplicationRunner {
             linha = leitura.readLine();
         }
 
-        for (Avaliacao avaliacao : avaliacaoService.obterLista()) {
-            System.out.println("[AVALIAÇÃO] " + avaliacao);
+        for (Avaliacao aval : avaliacaoService.obterLista()) {
+            System.out.println("[AVALIAÇÃO] " + aval);
         }
 
         leitura.close();

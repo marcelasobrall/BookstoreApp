@@ -1,35 +1,45 @@
 package br.edu.infnet.BookstoreApp.model.domain;
 
+import javax.persistence.*;
+
+import java.math.BigDecimal;
 import java.util.List;
 
+@Entity
 public class Livro {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
     private String titulo;
     private String autor;
     private String genero;
     private String sinopse;
-    private double preco;
-    private List<Avaliacao> avaliacoes;
-    private List<String> autores;
-    private List<String> generos;
+    private BigDecimal preco;
+	@OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+	private List<Avaliacao> avaliacoes;
+	@ElementCollection
+	private List<String> autores;
+	@ElementCollection
+	private List<String> generos;
 
-    private List<ItemDeCarrinho> itensCarrinho;
+	@OneToMany(mappedBy = "livro", cascade = CascadeType.ALL)
+	private List<ItemDeCarrinho> itensCarrinho;;
     
  
     public Livro() {
         
     }
 
-    public Livro(String titulo, String autor, String genero, String sinopse, double preco) {
+    public Livro(String titulo, String autor, String genero, String sinopse) {
         this.titulo = titulo;
         this.autor = autor;
         this.genero = genero;
         this.sinopse = sinopse;
-        this.preco = preco;
     }
     
     @Override
     public String toString() {
-        return String.format("Livro: %s, Autor: %s, Gênero: %s, Preço: %.2f", titulo, autor, genero, preco);
+        return String.format("Livro: %s, ID: %s, Autor: %s, Gênero: %s, Preço: %.2f", id,titulo, autor, genero, preco);
     }
 
 	public String getTitulo() {
@@ -64,13 +74,8 @@ public class Livro {
 		this.sinopse = sinopse;
 	}
 
-	public double getPreco() {
-		return preco;
-	}
 
-	public void setPreco(double preco) {
-		this.preco = preco;
-	}
+
 
 	public List<Avaliacao> getAvaliacoes() {
 		return avaliacoes;
@@ -98,4 +103,7 @@ public class Livro {
 	 public void setItensCarrinho(List<ItemDeCarrinho> itensCarrinho) {
 	        this.itensCarrinho = itensCarrinho;
 	    }
+
+	public void setPreco(double parseDouble) {
+	}
 }

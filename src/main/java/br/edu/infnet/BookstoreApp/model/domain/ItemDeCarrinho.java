@@ -1,11 +1,20 @@
 package br.edu.infnet.BookstoreApp.model.domain;
 
+import javax.persistence.*;
+
+@Entity
 public class ItemDeCarrinho {
     private static int proximoId = 1;
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    @ManyToOne
+    @JoinColumn(name = "livro_id")
     private Livro livro;
     private int quantidade;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "carrinho_id")
     private CarrinhoDeCompras carrinho;
   
     public ItemDeCarrinho() {
@@ -20,7 +29,7 @@ public class ItemDeCarrinho {
     
     @Override
     public String toString() {
-        return String.format("Item - Livro: %s, Quantidade: %d", livro.getTitulo(), quantidade);
+        return String.format("Item - ID:%s, Livro: %s, Quantidade: %d",id, livro.getTitulo(), quantidade);
     }
     public int getId() {
         return id;

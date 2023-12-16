@@ -3,7 +3,10 @@ package br.edu.infnet.BookstoreApp.model.service;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
+import br.edu.infnet.BookstoreApp.repositories.AvaliacaoLivroRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.edu.infnet.BookstoreApp.model.domain.Avaliacao;
@@ -11,13 +14,18 @@ import br.edu.infnet.BookstoreApp.model.domain.Avaliacao;
 @Service
 public class AvaliacaoLivroService {
 
-    private Map<Integer, Avaliacao> mapa = new HashMap<>();
+    @Autowired
+    private AvaliacaoLivroRepository avaliacaoRepository;
 
     public void incluir(Avaliacao avaliacao) {
-        mapa.put(avaliacao.getId(), avaliacao);
+        avaliacaoRepository.save(avaliacao);
     }
 
     public Collection<Avaliacao> obterLista() {
-        return mapa.values();
+        return (Collection<Avaliacao>) avaliacaoRepository.findAll();
+    }
+
+    public Optional<Avaliacao> obterPorId(Integer id) {
+        return avaliacaoRepository.findById(id);
     }
 }

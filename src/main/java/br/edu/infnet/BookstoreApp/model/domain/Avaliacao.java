@@ -2,15 +2,26 @@ package br.edu.infnet.BookstoreApp.model.domain;
 
 import br.edu.infnet.BookstoreApp.model.service.LivroService;
 
+import javax.persistence.*;
+
+@Entity
 public class Avaliacao {
-    private static int contadorIds = 1; 
-    private int id;
+    private static int contadorIds = 1;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private int avaliacao;
     private String comentario;
+    @ManyToOne
+    @JoinColumn(name = "livro_id")
     private Livro livro;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Usuario cliente;
 
 
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
 
     public Avaliacao() {
@@ -30,7 +41,7 @@ public class Avaliacao {
     @Override
     public String toString() {
         String livroTitulo = (livro != null) ? livro.getTitulo() : "(livro não especificado)";
-        return String.format("Avaliação - Livro: %s, Avaliação: %d", livroTitulo, avaliacao);
+        return String.format("Avaliação -ID:%s, Livro: %s, Avaliação: %d",id, livroTitulo, avaliacao);
     }
 
     public void associarLivroPorTitulo(String tituloLivro, LivroService livroService) {

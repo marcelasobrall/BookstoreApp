@@ -1,17 +1,28 @@
 package br.edu.infnet.BookstoreApp.model.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-
+@Entity
 public class Pedido {
 	private static int proximoId = 1;
-
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     private LocalDateTime dataPedido;
+    @Enumerated(EnumType.STRING)
     private StatusPedido status;
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
     private Usuario cliente;
+    @ManyToMany
+    @JoinTable(name = "pedido_item",
+            joinColumns = @JoinColumn(name = "pedido_id"),
+            inverseJoinColumns = @JoinColumn(name = "item_id"))
     private List<ItemDeCarrinho> itensCarrinho;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "carrinho_id")
     private CarrinhoDeCompras carrinho;
 
     public Pedido() {
@@ -28,7 +39,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return String.format("Pedido - Data: %s, Status: %s", dataPedido, status);
+        return String.format("Pedido - ID:&s, Data: %s, Status: %s",id, dataPedido, status);
     }
 
     public int getId() {
