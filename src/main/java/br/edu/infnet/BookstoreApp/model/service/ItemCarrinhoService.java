@@ -23,4 +23,7 @@ public class ItemCarrinhoService {
     public Collection<ItemDeCarrinho> obterLista() {
         return (Collection<ItemDeCarrinho>) itemCarrinhoRepository.findAll();
     }
+    public void excluir(Integer id) {
+        itemCarrinhoRepository.deleteById(id);
+    }
 }

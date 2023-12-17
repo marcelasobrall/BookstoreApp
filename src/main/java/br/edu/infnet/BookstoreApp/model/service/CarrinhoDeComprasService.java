@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import br.edu.infnet.BookstoreApp.model.domain.CarrinhoDeCompras;
 
+import javax.transaction.Transactional;
+
+
 @Service
 public class CarrinhoDeComprasService {
 
@@ -27,5 +30,9 @@ public class CarrinhoDeComprasService {
 
     public Optional<CarrinhoDeCompras> obterPorId(Integer id) {
         return carrinhoDeComprasRepository.findById(id);
+    }
+
+    public void excluir(Integer id) {
+        carrinhoDeComprasRepository.deleteById(id);
     }
 }

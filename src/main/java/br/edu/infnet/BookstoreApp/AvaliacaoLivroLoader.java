@@ -2,6 +2,7 @@ package br.edu.infnet.BookstoreApp;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
@@ -38,21 +39,22 @@ public class AvaliacaoLivroLoader implements ApplicationRunner {
         while (linha != null) {
             String[] campos = linha.split(";");
 
-            Avaliacao aval = new Avaliacao();
+            Avaliacao avaliacao = new Avaliacao();
 
             try {
-                aval.setAvaliacao(Integer.parseInt(campos[0]));
-                aval.setComentario(campos[2]); // Corrigido para o terceiro campo
+                avaliacao.setAvaliacao(Integer.parseInt(campos[0]));
+                avaliacao.setComentario(campos[1]);
 
                 String tituloLivro = campos[3];
 
-                aval.associarLivroPorTitulo(tituloLivro, livroService);
+
+                avaliacao.associarLivroPorTitulo(tituloLivro, livroService);
 
                 String emailCliente = campos[4];
                 Usuario cliente = usuarioService.obterPorEmail(emailCliente);
-                aval.setCliente(cliente);
+                avaliacao.setCliente(cliente);
 
-                avaliacaoService.incluir(aval);
+                avaliacaoService.incluir(avaliacao);
             } catch (NumberFormatException e) {
                 System.err.println("Erro ao converter Avaliação para inteiro: " + e.getMessage());
                 e.printStackTrace();
@@ -64,8 +66,8 @@ public class AvaliacaoLivroLoader implements ApplicationRunner {
             linha = leitura.readLine();
         }
 
-        for (Avaliacao aval : avaliacaoService.obterLista()) {
-            System.out.println("[AVALIAÇÃO] " + aval);
+        for (Avaliacao avaliacao : avaliacaoService.obterLista()) {
+            System.out.println("[AVALIAÇÃO] " + avaliacao);
         }
 
         leitura.close();

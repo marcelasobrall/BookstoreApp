@@ -42,9 +42,8 @@ public class UsuarioLoader implements ApplicationRunner {
             } else {
 
                 System.out.println("Valor de TipoUsuario inválido: " + tipoUsuarioString);
-                usuario.setTipo(TipoUsuario.CLIENTE); 
+                usuario.setTipo(TipoUsuario.CLIENTE);
             }
-
             usuarioService.incluir(usuario);
 
             linha = leitura.readLine();
@@ -52,9 +51,9 @@ public class UsuarioLoader implements ApplicationRunner {
 
         for (Usuario usuario : usuarioService.obterLista()) {
             System.out.println("[USUÁRIO] " + usuario);
+
         }
 
         leitura.close();
     }
 }
-
