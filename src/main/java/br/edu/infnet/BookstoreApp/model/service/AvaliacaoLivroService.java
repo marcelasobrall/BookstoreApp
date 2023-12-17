@@ -25,7 +25,12 @@ public class AvaliacaoLivroService {
         return (Collection<Avaliacao>) avaliacaoRepository.findAll();
     }
 
-    public Optional<Avaliacao> obterPorId(Integer id) {
-        return avaliacaoRepository.findById(id);
+    public Avaliacao obterPorId(Integer id) {
+        return avaliacaoRepository.findById(id).orElse(null);
+    }
+
+
+    public void excluir(Integer id) {
+        avaliacaoRepository.deleteById(id);
     }
 }

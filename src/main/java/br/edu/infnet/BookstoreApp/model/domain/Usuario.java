@@ -9,10 +9,15 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-    private String nome;
-    private String email;
-    private String senha;
-    private TipoUsuario tipo;
+
+	private String nome;
+
+	private String email;
+
+	private String senha;
+
+	private TipoUsuario tipo;
+
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "carrinho_id", referencedColumnName = "id")
 	private CarrinhoDeCompras carrinho;
@@ -36,10 +41,11 @@ public class Usuario {
     }
 
 
-    @Override
-    public String toString() {
-        return String.format("Usuário: ID=%s Email=%s, Nome=%s, Tipo=%s",id, email, nome, tipo);
-    }
+	@Override
+	public String toString() {
+		return String.format("Usuário: ID=%d, Nome=%s, Email=%s, Senha=%s, Tipo=%s",
+				id, nome, email, senha, tipo);
+	}
 
 	public String getNome() {
 		return nome;

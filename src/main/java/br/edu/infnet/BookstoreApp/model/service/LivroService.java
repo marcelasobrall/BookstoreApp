@@ -31,4 +31,7 @@ public class LivroService {
     public Livro obterPorTitulo(String titulo) {
         return livroRepository.findByTitulo(titulo);
     }
+    public void excluir(Integer id) {
+        livroRepository.deleteById(id);
+    }
 }

@@ -39,7 +39,7 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return String.format("Pedido - ID:&s, Data: %s, Status: %s",id, dataPedido, status);
+        return String.format("Pedido - ID:%s, Data: %s, Status: %s",id, dataPedido, status);
     }
 
     public int getId() {

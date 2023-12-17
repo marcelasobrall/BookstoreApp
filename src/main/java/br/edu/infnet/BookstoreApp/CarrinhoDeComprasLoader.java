@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.math.BigDecimal;
 
+import br.edu.infnet.BookstoreApp.model.domain.ItemDeCarrinho;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -62,4 +63,3 @@ public class CarrinhoDeComprasLoader implements ApplicationRunner {
         leitura.close();
     }
 }
-
